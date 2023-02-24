@@ -1,0 +1,15 @@
+{
+  "name": "user-authentication",
+  "version": "1.0.0",
+  "description": "The goal of this project is to implement user authentication with Node JS and PostgreSQL Database",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lukas Michalek",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
