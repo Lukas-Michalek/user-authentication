@@ -46,16 +46,32 @@ app.get('/', (request, response) => {
     response.render('index')
 })
 
-app.get('/users/register', (request, response) => {
+
+// checkAuthenticated => when user that is logged in would want to access login or register route, will be automaticly redirected back to dashboard as he is already registered and logged in
+app.get('/users/register', checkAuthenticated, (request, response) => {
     response.render('register')
 })
 
-app.get('/users/login', (request, response) => {
+app.get('/users/login', checkAuthenticated, (request, response) => {
     response.render('login')
 })
 
-app.get('/users/dashboard', (req, res) => {  
+
+// checkNotAuthenticated => when user is at this route middleware checks if he is authenitcated before moving to (req, res) section. In other words user that is not authenticated(logged in) cannot access dashboard or any other site except login and register without logging in first
+app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {  
     res.render('dashboard', { user: 'user' });
+})
+
+
+// request.logOut() is a function that we get in passport
+app.get('/users/logout', (request, response, next) => {
+    request.logOut(function(error){
+        if (error) return next(error);
+        
+        request.flash('success_msg','You have successfuly logged out!');
+        response.redirect('/users/login');
+       
+    })
 })
 
 app.post('/users/register', async (request, response) => {
@@ -149,6 +165,26 @@ app.post(
         failureFlash: true,
     })
 )
+
+// If user is logged in => is authenticated he will be automatically redirected to dashboard, where if he is not the middleware will simple jump to next middleware(so he wont be blocked from accessing what he wants)
+function checkAuthenticated(request, response, next){
+    if(request.isAuthenticated()){
+        return response.redirect('/users/dashboard')
+    };
+    next();
+}
+
+
+// In this case if user is authenticared(logged in) the middleware will move on to next middleware, but if he is not logged in he will be automatically redirected t ologin
+function checkNotAuthenticated(request, response, next){
+    if(request.isAuthenticated()){
+        return next();
+    }
+
+    response.redirect('/users/login');
+}
+
+
 
 app.listen(PORT, () => {
     console.log(`Server is listening in ${PORT}`)
