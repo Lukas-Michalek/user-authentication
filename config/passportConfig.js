@@ -1,5 +1,4 @@
 const LocaStrategy = require('passport-local').Strategy;
-const passport = require('passport');
 const { pool } = require('./dbConfig');
 const queries = require('./queries');
 const bcrypt = require('bcrypt');
@@ -61,7 +60,10 @@ function initialize(passport){
 
             return done(null, results.rows[0]);
         })
-    })
-
-    
+    })    
 }
+
+
+module.exports = initialize;
+
+

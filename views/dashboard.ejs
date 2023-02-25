@@ -9,7 +9,9 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <h1> Hello <%= user %>  </h1>
+    
+    <!-- Passes user variable from server at app.get('/users/dashboard'... and making the first letter - charAt(0) to be capital and then adding the rest through slice method starting at index 1 => second letter  -->
+    <h1> Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %>  </h1>
 
     <a href="/users/logout">Logout</a>
 
