@@ -13,6 +13,14 @@
 <body>
     <h1>Login</h1>
 
+    <!-- Flash message from server -->
+    <ul>
+        <% if(messages.success_msg){ %>
+        <li><%= messages.success_msg  %></li>
+        <%  } %>
+
+    </ul>
+
     <!-- Login Form for User that is going to post to our  /users/login route-->
     <form action="/users/login" method="post">
         
