@@ -13,6 +13,17 @@
 <body>
     <h1>Register</h1>
 
+    <!-- If the errors are being passed through from server.js -->
+    <ul>
+        <% if(typeof errors != 'undefined') { %>
+            <% errors.forEach((error) => { %>
+                <li><%= error.message %> </li>
+            <% } )%>
+            
+        <% } %>
+    </ul>
+
+
     <!-- Registration Form for User that is going to post to our  /users/register route-->
     <form action="/users/register" method="post">
         <div>
